@@ -76,6 +76,8 @@ define(\'DB_USER\',\'******\');
 define(\'DB_PASSWD\',\'******\');
 //MySQL 数据库名称
 define(\'DB_NAME\',\'******\');
+//MySQL 启用SSL连接，如需启用请将值改为1
+define(\'DB_SSL\', 0);
 
 ////////////////////////////以下选项使用任何数据库都需填写////////////////////////////
 //数据库前缀，建议保持默认
@@ -133,6 +135,7 @@ define(\'SYSTEM_SALT\',\'\');
                 echo '<div class="input-group"><span class="input-group-addon">数据库密码</span><input type="text" class="form-control" value="' . DB_PASSWD . '" disabled></div><br/>';
                 echo '<div class="input-group"><span class="input-group-addon">数据库名称</span><input type="text" class="form-control" value="' . DB_NAME . '" disabled></div><br/>';
                 echo '<div class="input-group"><span class="input-group-addon">数据表前缀</span><input type="text" class="form-control" value="' . DB_PREFIX . '" disabled></div><br/>';
+                echo '<div class="input-group"><span class="input-group-addon">数据库开启SSL</span><select name="dbssl" class="form-control" required="true"><option value="0">否</option><option value="1">是</option></select></div><br/>';
                 echo '<input type="hidden" name="isbae" value="1">';
                 echo '<input type="hidden" name="from_config" value="1">';
             } else {
@@ -145,6 +148,7 @@ define(\'SYSTEM_SALT\',\'\');
                 echo '<div class="input-group"><span class="input-group-addon">数据库密码</span><input type="text" class="form-control" name="dbpw" placeholder=""></div><br/>';
                 echo '<div class="input-group"><span class="input-group-addon">数据库名称</span><input type="text" class="form-control" name="dbname" placeholder=""></div><br/>';
                 echo '<div class="input-group"><span class="input-group-addon">数据表前缀</span><input type="text" class="form-control" name="dbprefix" value="tc_" placeholder=""></div><br/>';
+                echo '<div class="input-group"><span class="input-group-addon">数据库开启SSL</span><select name="dbssl" class="form-control" required="true"><option value="0">否</option><option value="1">是</option></select></div><br/>';
                 echo '</div>';
             }
             echo '<h4>站点创始人信息</h4><br/>';
@@ -171,6 +175,7 @@ define(\'SYSTEM_SALT\',\'\');
                 define('DB_PASSWD', $_POST['dbpw']);
                 define('DB_NAME', $_POST['dbname']);
                 define('DB_PREFIX', $_POST['dbprefix']);
+                define('DB_SSL', $_POST['dbssl']);
             }
             $sql  = str_ireplace('{VAR-PREFIX}', DB_PREFIX, file_get_contents(SYSTEM_ROOT2 . '/install.template.sql'));
             $sql  = str_ireplace('{VAR-DB}', DB_NAME, $sql);
@@ -222,6 +227,8 @@ define(\'DB_USER\',\'' . DB_USER . '\');
 define(\'DB_PASSWD\',\'' . DB_PASSWD . '\');
 //MySQL 数据库名称
 define(\'DB_NAME\',\'' . DB_NAME . '\');
+//MySQL 启用SSL连接，如需启用请将值改为1
+define(\'DB_SSL\',' . DB_SSL .');
 
 ////////////////////////////以下选项使用任何数据库都需填写////////////////////////////
 //数据库前缀，建议保持默认

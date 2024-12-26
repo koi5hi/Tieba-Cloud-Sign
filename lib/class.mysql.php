@@ -41,15 +41,21 @@ class wmysql
      * @param string $name 数据库名
      * @param bool $long 是否开启长连接
      */
-    public function __construct($host, $user, $pw, $name, $long = false)
+    public function __construct($host, $user, $pw, $name, $long = false, $useSSL = false)
     {
         if (!function_exists('mysql_connect')) {
             throw new Exception('服务器PHP不支持MySql数据库');
         }
+
+        $flag = 0;
+        if ($useSSL) {
+            $flag = $flag & MYSQL_CLIENT_SSL;
+        }
+
         if ($long) {
-            $this->conn = @mysql_pconnect($host, $user, $pw);
+            $this->conn = @mysql_pconnect($host, $user, $pw, $flag);
         } else {
-            $this->conn = @mysql_connect($host, $user, $pw);
+            $this->conn = @mysql_connect($host, $user, $pw, false, $flag);
         }
         if (!$this->conn) {
             switch ($this->geterrno()) {
